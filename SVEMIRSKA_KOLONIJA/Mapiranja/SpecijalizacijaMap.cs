@@ -1,0 +1,18 @@
+﻿using FluentNHibernate.Mapping;
+using SvemirskaKolonija.Entiteti;
+
+namespace SvemirskaKolonija.Mapiranja
+{
+    class SpecijalizacijaMap : ClassMap<Specijalizacija>
+    {
+        public SpecijalizacijaMap()
+        {
+            Table("SPECIJALIZACIJA");
+            Id(x => x.Id, "SPECIJALIZACIJA_ID").GeneratedBy.Sequence("SEQ_SPECIJALIZACIJA");
+            Map(x => x.Naziv, "NAZIV");
+
+            HasMany(x => x.PosedujuStanovnici).KeyColumn("SPECIJALIZACIJA_ID").LazyLoad().Cascade.All().Inverse();
+            HasMany(x => x.PotrebnaZaZadatke).KeyColumn("SPECIJALIZACIJA_ID").LazyLoad().Cascade.All().Inverse();
+        }
+    }
+}
