@@ -4,7 +4,7 @@
     using FluentNHibernate.Cfg;
     using FluentNHibernate.Cfg.Db;
     using NHibernate;
-    using SvemirskaKolonija.Mapiranja; // Ispravljeno za tvoj projekat
+    using SVEMIRSKA_KOLONIJA.Mapiranja; // Ispravljeno za tvoj projekat
 
     public class DataLayer
     {

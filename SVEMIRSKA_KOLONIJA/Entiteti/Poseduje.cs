@@ -1,6 +1,7 @@
-﻿using System;
+﻿using SVEMIRSKA_KOLONIJA.Entiteti;
+using System;
 
-namespace SvemirskaKolonija.Entiteti
+namespace SVEMIRSKA_KOLONIJA.Entiteti
 {
     public class Poseduje
     {

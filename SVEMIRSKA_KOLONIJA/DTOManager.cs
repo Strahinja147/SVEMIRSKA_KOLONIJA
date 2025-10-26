@@ -4,11 +4,11 @@ using System.Linq;
 using System.Windows.Forms; // Potrebno za MessageBox
 using NHibernate;
 using NHibernate.Linq;
-using SvemirskaKolonija.Entiteti;
-using SvemirskaKolonija.DTOs;
+using SVEMIRSKA_KOLONIJA.Entiteti;
+using SVEMIRSKA_KOLONIJA.DTOs;
 using SVEMIRSKA_KOLONIJA; // Obavezno dodati using za namespace gde se nalazi DataLayer
 
-namespace SvemirskaKolonija
+namespace SVEMIRSKA_KOLONIJA
 {
     public static class DTOManager
     {
@@ -207,14 +207,15 @@ namespace SvemirskaKolonija
                 t = s.BeginTransaction();
 
                 Stanovnik st = s.Load<Stanovnik>(id);
-                s.Delete(st);
+                s.Delete(st); // Pusti bazu da javi grešku ako je stanovnik i dalje negde vođa ili odgovoran
 
                 t.Commit();
             }
             catch (Exception ex)
             {
                 t?.Rollback();
-                MessageBox.Show($"Došlo je do greške prilikom brisanja stanovnika.\n\n{ex.Message}", "Greška", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                // Poruka će sada biti mnogo jasnija, npr. "ORA-02292: integrity constraint violated..."
+                MessageBox.Show($"Došlo je do greške prilikom brisanja stanovnika. Proverite da li je i dalje vođa nekog sektora ili odgovoran za nekog robota.\n\nOriginalna greška:\n{ex.Message}", "Greška", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally
             {
@@ -434,6 +435,74 @@ namespace SvemirskaKolonija
                 s?.Close();
             }
         }
+
+        public static void DodeliRadnikaSektoru(int radnikId, int sektorId)
+        {
+            ISession s = null;
+            ITransaction t = null;
+            try
+            {
+                s = DataLayer.GetSession();
+                t = s.BeginTransaction();
+
+                var radnik = s.Load<Stanovnik>(radnikId);
+                var sektor = s.Load<Sektor>(sektorId);
+
+                // Proveravamo da li veza već postoji da ne bi došlo do dupliranja
+                if (!sektor.Radnici.Any(r => r.Id == radnikId))
+                {
+                    sektor.Radnici.Add(radnik);
+                    s.Update(sektor);
+                }
+
+                t.Commit();
+            }
+            catch (Exception ex)
+            {
+                t?.Rollback();
+                MessageBox.Show($"Došlo je do greške prilikom dodeljivanja radnika sektoru.\n\n{ex.Message}", "Greška", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                s?.Close();
+            }
+        }
+
+        /// <summary>
+        /// Uklanja radnika iz sektora (raskida M:N vezu).
+        /// </summary>
+        public static void UkloniRadnikaIzSektora(int radnikId, int sektorId)
+        {
+            ISession s = null;
+            ITransaction t = null;
+            try
+            {
+                s = DataLayer.GetSession();
+                t = s.BeginTransaction();
+
+                var sektor = s.Load<Sektor>(sektorId);
+                var radnik = sektor.Radnici.FirstOrDefault(r => r.Id == radnikId);
+
+                if (radnik != null)
+                {
+                    sektor.Radnici.Remove(radnik);
+                    s.Update(sektor);
+                }
+
+                t.Commit();
+            }
+            catch (Exception ex)
+            {
+                t?.Rollback();
+                MessageBox.Show($"Došlo je do greške prilikom uklanjanja radnika iz sektora.\n\n{ex.Message}", "Greška", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                s?.Close();
+            }
+        }
+
+
         #endregion
 
         #region Zadatak
@@ -684,6 +753,37 @@ namespace SvemirskaKolonija
             {
                 t?.Rollback();
                 MessageBox.Show($"Došlo je do greške prilikom brisanja zadatka.\n\n{ex.Message}", "Greška", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                s?.Close();
+            }
+        }
+
+        public static void AngazujUcesnikaNaZadatku(int ucesnikZadatkaId, int zadatakId)
+        {
+            ISession s = null;
+            ITransaction t = null;
+            try
+            {
+                s = DataLayer.GetSession();
+                t = s.BeginTransaction();
+
+                var ucesnik = s.Load<UcesnikZadatka>(ucesnikZadatkaId);
+                var zadatak = s.Load<Zadatak>(zadatakId);
+
+                if (!zadatak.AngazovaniUcesnici.Any(u => u.Id == ucesnikZadatkaId))
+                {
+                    zadatak.AngazovaniUcesnici.Add(ucesnik);
+                    s.Update(zadatak);
+                }
+
+                t.Commit();
+            }
+            catch (Exception ex)
+            {
+                t?.Rollback();
+                MessageBox.Show($"Došlo je do greške prilikom angažovanja učesnika na zadatku.\n\n{ex.Message}", "Greška", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally
             {
@@ -1106,6 +1206,37 @@ namespace SvemirskaKolonija
             }
         }
 
+        public static void DodeliUpraviteljaResursu(int stanovnikId, int resursId)
+        {
+            ISession s = null;
+            ITransaction t = null;
+            try
+            {
+                s = DataLayer.GetSession();
+                t = s.BeginTransaction();
+
+                var stanovnik = s.Load<Stanovnik>(stanovnikId);
+                var resurs = s.Load<Resurs>(resursId);
+
+                if (!resurs.Upravitelji.Any(u => u.Id == stanovnikId))
+                {
+                    resurs.Upravitelji.Add(stanovnik);
+                    s.Update(resurs);
+                }
+
+                t.Commit();
+            }
+            catch (Exception ex)
+            {
+                t?.Rollback();
+                MessageBox.Show($"Došlo je do greške prilikom dodeljivanja upravitelja resursu.\n\n{ex.Message}", "Greška", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                s?.Close();
+            }
+        }
+
         #endregion
 
         #region Specijalizacija
@@ -1219,6 +1350,7 @@ namespace SvemirskaKolonija
             return detalji;
         }
 
+
         #endregion
 
         #region Upravljanje Vezama (Poseduje, Trosi, Potrebna, Kontakt)
@@ -1309,6 +1441,7 @@ namespace SvemirskaKolonija
                     Ime = p.Ime,
                     Odnos = p.Odnos
                 };
+
 
                 // Dodavanje višeznačnog atributa
                 foreach (var info in p.KontaktInformacije)

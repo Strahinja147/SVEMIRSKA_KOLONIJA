@@ -1,7 +1,7 @@
 ﻿using FluentNHibernate.Mapping;
-using SvemirskaKolonija.Entiteti;
+using SVEMIRSKA_KOLONIJA.Entiteti;
 
-namespace SvemirskaKolonija.Mapiranja
+namespace SVEMIRSKA_KOLONIJA.Mapiranja
 {
     class UcesnikZadatkaMap : ClassMap<UcesnikZadatka>
     {

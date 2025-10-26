@@ -131,6 +131,18 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forme\DodajStanovnikaForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forme\DodajStanovnikaForm.Designer.cs">
+      <DependentUpon>DodajStanovnikaForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forme\StanovniciForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forme\StanovniciForm.Designer.cs">
+      <DependentUpon>StanovniciForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Mapiranja\EksperimentMap.cs" />
     <Compile Include="Mapiranja\EvakuacijaMap.cs" />
     <Compile Include="Mapiranja\IstrazivanjeMap.cs" />
@@ -153,6 +165,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forme\DodajStanovnikaForm.resx">
+      <DependentUpon>DodajStanovnikaForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forme\StanovniciForm.resx">
+      <DependentUpon>StanovniciForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -183,8 +201,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Forme\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

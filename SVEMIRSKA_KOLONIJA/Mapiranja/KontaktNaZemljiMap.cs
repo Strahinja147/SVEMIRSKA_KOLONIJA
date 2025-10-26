@@ -1,7 +1,7 @@
 ﻿using FluentNHibernate.Mapping;
-using SvemirskaKolonija.Entiteti;
+using SVEMIRSKA_KOLONIJA.Entiteti;
 
-namespace SvemirskaKolonija.Mapiranja
+namespace SVEMIRSKA_KOLONIJA.Mapiranja
 {
     class KontaktNaZemljiMap : ClassMap<KontaktNaZemlji>
     {
@@ -14,7 +14,14 @@ namespace SvemirskaKolonija.Mapiranja
 
             References(x => x.Stanovnik, "STANOVNIK_ID");
 
-            HasMany(x => x.KontaktInformacije).KeyColumn("KONTAKT_ID").LazyLoad().Cascade.All().Inverse();
+            // --- ISPRAVLJENA LINIJA ---
+            // Zamenjeno .Cascade.All() sa .Cascade.AllDeleteOrphan()
+            // da bi se osiguralo brisanje zavisnih informacija.
+            HasMany(x => x.KontaktInformacije)
+                .KeyColumn("KONTAKT_ID")
+                .LazyLoad()
+                .Cascade.AllDeleteOrphan() // Ovo je ključna izmena
+                .Inverse();
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace SvemirskaKolonija.Entiteti
+﻿namespace SVEMIRSKA_KOLONIJA.Entiteti
 {
     public class MedicinskaIntervencija : Zadatak
     {

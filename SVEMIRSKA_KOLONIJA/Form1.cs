@@ -1,4 +1,4 @@
-﻿using SvemirskaKolonija;
+﻿using SVEMIRSKA_KOLONIJA;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -24,7 +24,7 @@ namespace SVEMIRSKA_KOLONIJA
             this.listView1.Items.Clear();
 
             // 2. Pozovi metodu iz DTOManager-a
-            List<SvemirskaKolonija.DTOs.StanovnikPregled> stanovnici = DTOManager.VratiSveStanovnike();
+            List<SVEMIRSKA_KOLONIJA.DTOs.StanovnikPregled> stanovnici = DTOManager.VratiSveStanovnike();
 
             // 3. Prođi kroz dobijenu listu i dodaj svaki DTO kao red u ListView
             foreach (var st in stanovnici)

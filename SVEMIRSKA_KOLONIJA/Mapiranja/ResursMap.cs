@@ -1,7 +1,7 @@
 ﻿using FluentNHibernate.Mapping;
-using SvemirskaKolonija.Entiteti;
+using SVEMIRSKA_KOLONIJA.Entiteti;
 
-namespace SvemirskaKolonija.Mapiranja
+namespace SVEMIRSKA_KOLONIJA.Mapiranja
 {
     class ResursMap : ClassMap<Resurs>
     {
@@ -15,7 +15,11 @@ namespace SvemirskaKolonija.Mapiranja
 
             References(x => x.Sektor, "SEKTOR_ID");
 
-            HasMany(x => x.PotrosnjaPoSektorima).KeyColumn("RESURS_ID").LazyLoad().Cascade.All().Inverse();
+            //HasMany(x => x.PotrosnjaPoSektorima).KeyColumn("RESURS_ID").LazyLoad().Cascade.All().Inverse();
+            HasMany(x => x.PotrosnjaPoSektorima)
+                .KeyColumn("RESURS_ID")
+                .Cascade.AllDeleteOrphan() // Obavezno!
+                .Inverse();
 
             HasManyToMany(x => x.Upravitelji)
                 .Table("UPRAVLJA_RESURSOM")

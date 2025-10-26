@@ -1,7 +1,7 @@
 ﻿namespace SVEMIRSKA_KOLONIJA.Mapiranja 
 { 
     using FluentNHibernate.Mapping;
-    using SvemirskaKolonija.Entiteti;
+    using SVEMIRSKA_KOLONIJA.Entiteti;
 
     public class MedicinskaIntervencijaMap : SubclassMap<MedicinskaIntervencija>
     {

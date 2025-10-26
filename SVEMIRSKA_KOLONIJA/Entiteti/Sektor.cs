@@ -1,7 +1,7 @@
 ﻿
 using System.Collections.Generic;
 
-namespace SvemirskaKolonija.Entiteti
+namespace SVEMIRSKA_KOLONIJA.Entiteti
 {
     public class Sektor
     {

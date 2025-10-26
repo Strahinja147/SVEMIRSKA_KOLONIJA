@@ -1,7 +1,7 @@
 ﻿using FluentNHibernate.Mapping;
-using SvemirskaKolonija.Entiteti;
+using SVEMIRSKA_KOLONIJA.Entiteti;
 
-namespace SvemirskaKolonija.Mapiranja
+namespace SVEMIRSKA_KOLONIJA.Mapiranja
 {
     class StanovnikMap : ClassMap<Stanovnik>
     {
@@ -21,12 +21,45 @@ namespace SvemirskaKolonija.Mapiranja
 
             References(x => x.UcesnikZadatka, "UCESNIK_ZADATKA_ID").Unique();
 
-            HasMany(x => x.KontaktiNaZemlji).KeyColumn("STANOVNIK_ID").LazyLoad().Cascade.All().Inverse();
-            HasMany(x => x.SektoriKojeVodi).KeyColumn("STANOVNIK_ID").LazyLoad().Cascade.All().Inverse();
-            HasMany(x => x.OdgovoranZaRobote).KeyColumn("ODGOVORNI_STANOVNIK_ID").LazyLoad().Cascade.All().Inverse();
-            HasMany(x => x.ProgramiraniRoboti).KeyColumn("PROGRAMER_STANOVNIK_ID").LazyLoad().Cascade.All().Inverse();
-            HasMany(x => x.Specijalizacije).KeyColumn("STANOVNIK_ID").LazyLoad().Cascade.All().Inverse();
+            // --- ISPRAVLJENE VEZE ---
 
+            // Kada se obriše Stanovnik, njegovi kontakti se takođe brišu. OVO JE ISPRAVNO.
+            HasMany(x => x.KontaktiNaZemlji)
+                .KeyColumn("STANOVNIK_ID")
+                .LazyLoad()
+                .Cascade.AllDeleteOrphan()
+                .Inverse();
+
+            // Kada se obriše Stanovnik, njegove specijalizacije (veze u tabeli POSEDUJE) se takođe brišu. OVO JE ISPRAVNO.
+            HasMany(x => x.Specijalizacije)
+                .KeyColumn("STANOVNIK_ID")
+                .LazyLoad()
+                .Cascade.AllDeleteOrphan()
+                .Inverse();
+
+            // Kada se obriše Stanovnik, Sektor kojim upravlja NE SME BITI OBRISAN.
+            // .Cascade.None() sprečava bilo kakvu automatsku operaciju. Baza će prijaviti grešku ako je veza aktivna.
+            HasMany(x => x.SektoriKojeVodi)
+                .KeyColumn("STANOVNIK_ID")
+                .LazyLoad()
+                .Cascade.None() // ISPRAVLJENO
+                .Inverse();
+
+            // Kada se obriše Stanovnik, Robot za koga je odgovoran NE SME BITI OBRISAN.
+            HasMany(x => x.OdgovoranZaRobote)
+                .KeyColumn("ODGOVORNI_STANOVNIK_ID")
+                .LazyLoad()
+                .Cascade.None() // ISPRAVLJENO
+                .Inverse();
+
+            // Kada se obriše Stanovnik, Robot koga je programirao NE SME BITI OBRISAN.
+            HasMany(x => x.ProgramiraniRoboti)
+                .KeyColumn("PROGRAMER_STANOVNIK_ID")
+                .LazyLoad()
+                .Cascade.None() // ISPRAVLJENO
+                .Inverse();
+
+            // HasManyToMany veze ostaju iste jer one upravljaju samo veznom tabelom.
             HasManyToMany(x => x.RadiUSektorima)
                 .Table("RADI_U")
                 .ParentKeyColumn("STANOVNIK_ID")

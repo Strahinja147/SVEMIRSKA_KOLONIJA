@@ -1,15 +1,17 @@
-﻿using FluentNHibernate.Mapping;
-using SvemirskaKolonija.Entiteti;
+﻿// Fajl: Mapiranja/PosedujeMap.cs
+using FluentNHibernate.Mapping;
+using SVEMIRSKA_KOLONIJA.Entiteti;
 
-namespace SvemirskaKolonija.Mapiranja
+namespace SVEMIRSKA_KOLONIJA.Mapiranja
 {
     class PosedujeMap : ClassMap<Poseduje>
     {
         public PosedujeMap()
         {
-            Table("POSEDuje");
-            // Napomena: Za ovo je potrebno dodati sekvencu u bazu
-            Id(x => x.Id, "POSEDuje_ID").GeneratedBy.Sequence("SEQ_POSEDuje");
+            // ISPRAVLJENO: Ime tabele sa velikim slovima
+            Table("POSEDUJE");
+
+            Id(x => x.Id, "POSEDuje_ID").GeneratedBy.Sequence("SEQ_POSEDUJE");
 
             Map(x => x.Institucija, "INSTITUCIJA");
             Map(x => x.DatumSticanja, "DATUM_STICANJA");

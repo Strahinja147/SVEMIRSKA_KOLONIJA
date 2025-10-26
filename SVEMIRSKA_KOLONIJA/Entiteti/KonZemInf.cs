@@ -1,4 +1,5 @@
-﻿namespace SvemirskaKolonija.Entiteti
+﻿// Fajl: Entiteti/KonZemInf.cs
+namespace SVEMIRSKA_KOLONIJA.Entiteti
 {
     public class KonZemInf
     {

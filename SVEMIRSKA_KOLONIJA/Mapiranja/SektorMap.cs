@@ -1,7 +1,7 @@
 ﻿using FluentNHibernate.Mapping;
-using SvemirskaKolonija.Entiteti;
+using SVEMIRSKA_KOLONIJA.Entiteti;
 
-namespace SvemirskaKolonija.Mapiranja
+namespace SVEMIRSKA_KOLONIJA.Mapiranja
 {
     class SektorMap : ClassMap<Sektor>
     {
@@ -21,7 +21,11 @@ namespace SvemirskaKolonija.Mapiranja
             HasMany(x => x.ResursiUSektoru).KeyColumn("SEKTOR_ID").LazyLoad().Cascade.All().Inverse();
             HasMany(x => x.RobotiUSektoru).KeyColumn("SEKTOR_ID").LazyLoad().Cascade.All().Inverse();
             HasMany(x => x.ZapisiOdrzavanja).KeyColumn("SEKTOR_ID").LazyLoad().Cascade.All().Inverse();
-            HasMany(x => x.PotrosnjaResursa).KeyColumn("SEKTOR_ID").LazyLoad().Cascade.All().Inverse();
+            //HasMany(x => x.PotrosnjaResursa).KeyColumn("SEKTOR_ID").LazyLoad().Cascade.All().Inverse();
+            HasMany(x => x.PotrosnjaResursa)
+                .KeyColumn("SEKTOR_ID")
+                .Cascade.AllDeleteOrphan() // Obavezno!
+                .Inverse();
 
             HasManyToMany(x => x.Radnici)
                 .Table("RADI_U")

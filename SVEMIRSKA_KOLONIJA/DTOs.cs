@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace SvemirskaKolonija.DTOs
+namespace SVEMIRSKA_KOLONIJA.DTOs
 {
     #region Stanovnik
 
