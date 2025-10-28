@@ -9,7 +9,7 @@ namespace SVEMIRSKA_KOLONIJA.Mapiranja
         {
             Table("SEKTOR");
 
-            Id(x => x.Id, "SEKTOR_ID").GeneratedBy.Sequence("SEQ_SEKTOR");
+            Id(x => x.Id, "SEKTOR_ID").GeneratedBy.Native("SEQ_SEKTOR");
 
             Map(x => x.TipSektora, "TIP_SEKTORA");
             Map(x => x.Kapacitet, "KAPACITET");

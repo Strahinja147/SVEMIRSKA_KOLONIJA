@@ -8,7 +8,7 @@ namespace SVEMIRSKA_KOLONIJA.Mapiranja
         public KontaktNaZemljiMap()
         {
             Table("KONTAKT_NA_ZEMLJI");
-            Id(x => x.Id, "KONTAKT_ID").GeneratedBy.Sequence("SEQ_KONTAKT_NA_ZEMLJI");
+            Id(x => x.Id, "KONTAKT_ID").GeneratedBy.Assigned();
             Map(x => x.Odnos, "ODNOS");
             Map(x => x.Ime, "IME");
 

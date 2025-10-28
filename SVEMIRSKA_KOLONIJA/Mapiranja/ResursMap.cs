@@ -8,7 +8,7 @@ namespace SVEMIRSKA_KOLONIJA.Mapiranja
         public ResursMap()
         {
             Table("RESURS");
-            Id(x => x.Id, "RESURS_ID").GeneratedBy.Sequence("SEQ_RESURS");
+            Id(x => x.Id, "RESURS_ID").GeneratedBy.Native("SEQ_RESURS");
 
             Map(x => x.Naziv, "NAZIV");
             Map(x => x.TrenutnaKolicina, "TRENUTNA_KOLICINA");

@@ -8,7 +8,7 @@ namespace SVEMIRSKA_KOLONIJA.Mapiranja
         public UcesnikZadatkaMap()
         {
             Table("UCESNIK_ZADATKA");
-            Id(x => x.Id, "UCESNIK_ZADATKA_ID").GeneratedBy.Sequence("SEQ_UCESNIK_ZADATKA");
+            Id(x => x.Id, "UCESNIK_ZADATKA_ID").GeneratedBy.Native("SEQ_UCESNIK_ZADATKA");
 
             HasOne(x => x.PripadaStanovniku).PropertyRef(nameof(Stanovnik.UcesnikZadatka));
             HasOne(x => x.PripadaRobotu).PropertyRef(nameof(Robot.UcesnikZadatka));

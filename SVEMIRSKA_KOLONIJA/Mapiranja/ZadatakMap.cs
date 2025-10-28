@@ -9,7 +9,7 @@ namespace SVEMIRSKA_KOLONIJA.Mapiranja
         {
             Table("ZADATAK");
 
-            Id(x => x.Id, "ZADATAK_ID").GeneratedBy.Sequence("SEQ_ZADATAK");
+            Id(x => x.Id, "ZADATAK_ID").GeneratedBy.Native("SEQ_ZADATAK");
 
             // Definiše kolonu koja određuje tip podklase
             DiscriminateSubClassesOnColumn("TIP_ZADATKA");

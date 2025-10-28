@@ -1,5 +1,6 @@
 ﻿using SVEMIRSKA_KOLONIJA.DTOs;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -8,7 +9,7 @@ namespace SVEMIRSKA_KOLONIJA.Forme
     public partial class DodajIzmeniSektorForm : Form
     {
         private SektorDetalji sektorZaObradu;
-
+        private List<StanovnikPregled> privremeniRadnici;
         public DodajIzmeniSektorForm(int? sektorId)
         {
             InitializeComponent();
@@ -17,12 +18,13 @@ namespace SVEMIRSKA_KOLONIJA.Forme
             {
                 this.Text = "Izmena Sektora";
                 sektorZaObradu = DTOManager.VratiSektorDetalji(sektorId.Value);
+                privremeniRadnici = new List<StanovnikPregled>(sektorZaObradu.Radnici ?? new List<StanovnikPregled>());
             }
             else
             {
                 this.Text = "Dodavanje Novog Sektora";
+                privremeniRadnici = new List<StanovnikPregled>();
                 sektorZaObradu = new SektorDetalji();
-                btnDodeliRadnika.Enabled = false;
             }
         }
 
@@ -55,12 +57,13 @@ namespace SVEMIRSKA_KOLONIJA.Forme
 
             if (sektorZaObradu.Radnici == null) return;
 
-            foreach (var radnik in sektorZaObradu.Radnici)
+            foreach (var radnik in privremeniRadnici)
             {
                 ListViewItem item = new ListViewItem(new string[] { radnik.Id.ToString(), radnik.Ime, radnik.Prezime });
                 item.Tag = radnik;
                 lvRadnici.Items.Add(item);
             }
+            lvRadnici.Sort();
             lvRadnici.Refresh();
         }
 
@@ -78,39 +81,23 @@ namespace SVEMIRSKA_KOLONIJA.Forme
 
         private void btnDodeliRadnika_Click(object sender, EventArgs e)
         {
-            IzaberiStanovnikaForm formaZaIzbor = new IzaberiStanovnikaForm();
+            List<int> postojeciId = privremeniRadnici.Select(r => r.Id).ToList();
+            if (sektorZaObradu.VodjaSektora != null)
+                postojeciId.Add(sektorZaObradu.VodjaSektora.Id);
+
+            IzaberiStanovnikaForm formaZaIzbor = new IzaberiStanovnikaForm(postojeciId);
+
             if (formaZaIzbor.ShowDialog() == DialogResult.OK)
             {
                 var izabraniRadnik = formaZaIzbor.IzabraniStanovnik;
 
-                // ---- KLJUČNA IZMENA: PROVERA ----
-                // Proveri da li sektor uopšte ima dodeljenog vođu
-                if (this.sektorZaObradu.VodjaSektora != null)
+                if (sektorZaObradu.Id != 0)
                 {
-                    // Ako ima, proveri da li je ID izabranog radnika isti kao ID vođe
-                    if (izabraniRadnik.Id == this.sektorZaObradu.VodjaSektora.Id)
-                    {
-                        MessageBox.Show("Ne možete dodeliti vođu sektora kao radnika.", "Greška", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return; // Prekini dalje izvršavanje
-                    }
+                    DTOManager.DodeliRadnikaSektoru(izabraniRadnik.Id, this.sektorZaObradu.Id);
                 }
 
-                // Provera da li je radnik već dodat (ovo ostaje od ranije)
-                if (sektorZaObradu.Radnici.Any(r => r.Id == izabraniRadnik.Id))
-                {
-                    MessageBox.Show("Ovaj radnik je već dodeljen sektoru.");
-                    return;
-                }
-
-                // Ako provere prođu, nastavi sa postojećom logikom
-                bool uspeh = DTOManager.DodeliRadnikaSektoru(izabraniRadnik.Id, this.sektorZaObradu.Id);
-
-                if (uspeh)
-                {
-                    this.sektorZaObradu.Radnici.Add(izabraniRadnik);
-                    PopuniListuRadnika();
-                    MessageBox.Show("Radnik uspešno dodeljen.");
-                }
+                privremeniRadnici.Add(izabraniRadnik);
+                PopuniListuRadnika();
             }
         }
 
@@ -124,22 +111,26 @@ namespace SVEMIRSKA_KOLONIJA.Forme
 
             sektorZaObradu.Naziv = txtNaziv.Text;
             sektorZaObradu.TipSektora = txtTipSektora.Text;
-
             int.TryParse(txtKapacitet.Text, out int kapacitet);
             sektorZaObradu.Kapacitet = kapacitet;
-
             double.TryParse(txtPovrsina.Text, out double povrsina);
             sektorZaObradu.Povrsina = povrsina;
 
             if (sektorZaObradu.Id == 0)
             {
-                DTOManager.DodajSektor(this.sektorZaObradu);
-                MessageBox.Show("Uspešno ste dodali novi sektor!");
+                var sacuvaniSektor = DTOManager.DodajSektor(sektorZaObradu);
+
+                if (sacuvaniSektor != null)
+                {
+                    foreach (var radnik in privremeniRadnici)
+                    {
+                        DTOManager.DodeliRadnikaSektoru(radnik.Id, sacuvaniSektor.Id);
+                    }
+                }
             }
             else
             {
-                DTOManager.AzurirajSektor(this.sektorZaObradu);
-                MessageBox.Show("Uspešno ste ažurirali podatke o sektoru!");
+                DTOManager.AzurirajSektor(sektorZaObradu);
             }
 
             this.DialogResult = DialogResult.OK;

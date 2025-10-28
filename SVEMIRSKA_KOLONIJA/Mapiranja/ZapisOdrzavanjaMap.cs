@@ -8,7 +8,7 @@ namespace SVEMIRSKA_KOLONIJA.Mapiranja
         public ZapisOdrzavanjaMap()
         {
             Table("ZAPIS_ODRZAVANJA");
-            Id(x => x.Id, "ZAPIS_ID").GeneratedBy.Sequence("SEQ_ZAPIS_ODRZAVANJA");
+            Id(x => x.Id, "ZAPIS_ID").GeneratedBy.Native("SEQ_ZAPIS_ODRZAVANJA");
             Map(x => x.VremeOdrzavanja, "VREME_ODRZAVANJA");
 
             References(x => x.Sektor, "SEKTOR_ID");

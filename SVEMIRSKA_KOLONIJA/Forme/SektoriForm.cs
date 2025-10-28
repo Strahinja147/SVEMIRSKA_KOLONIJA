@@ -1,5 +1,6 @@
 ﻿using SVEMIRSKA_KOLONIJA.DTOs;
 using System;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace SVEMIRSKA_KOLONIJA.Forme
@@ -19,7 +20,7 @@ namespace SVEMIRSKA_KOLONIJA.Forme
         public void PopuniPodacima()
         {
             lvSektori.Items.Clear();
-            var sektori = DTOManager.VratiSveSektore();
+            var sektori = DTOManager.VratiSveSektore().OrderBy(s=>s.Id).ToList();
 
             foreach (var sektor in sektori)
             {

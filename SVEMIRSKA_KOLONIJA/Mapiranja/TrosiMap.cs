@@ -8,7 +8,7 @@ namespace SVEMIRSKA_KOLONIJA.Mapiranja
         public TrosiMap()
         {
             Table("TROSI");
-            Id(x => x.Id, "TROSI_ID").GeneratedBy.Sequence("SEQ_TROSI");
+            Id(x => x.Id, "TROSI_ID").GeneratedBy.Native("SEQ_TROSI");
 
             Map(x => x.DnevniProsek, "DNEVNI_PROSEK");
             Map(x => x.KriticnaVrednost, "KRITICNA_VREDNOST");
