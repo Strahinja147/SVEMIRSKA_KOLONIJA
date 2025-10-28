@@ -288,12 +288,12 @@ namespace SVEMIRSKA_KOLONIJA
                         Zanimanje = sekt.VodjaSektora.Zanimanje
                     } : null,
 
-                    Radnici = sekt.Radnici.Select(r => new StanovnikPregled
+                    Radnici = sekt.Radnici.Select(veza => new StanovnikPregled
                     {
-                        Id = r.Id,
-                        Ime = r.Ime,
-                        Prezime = r.Prezime,
-                        Zanimanje = r.Zanimanje
+                        Id = veza.Id,
+                        Ime = veza.Ime,
+                        Prezime = veza.Prezime,
+                        Zanimanje = veza.Zanimanje
                     }).ToList(),
 
                     ResursiUSektoru = sekt.ResursiUSektoru.Select(r => new ResursPregled
@@ -436,7 +436,7 @@ namespace SVEMIRSKA_KOLONIJA
             }
         }
 
-        public static void DodeliRadnikaSektoru(int radnikId, int sektorId)
+        public static bool DodeliRadnikaSektoru(int radnikId, int sektorId)
         {
             ISession s = null;
             ITransaction t = null;
@@ -448,19 +448,29 @@ namespace SVEMIRSKA_KOLONIJA
                 var radnik = s.Load<Stanovnik>(radnikId);
                 var sektor = s.Load<Sektor>(sektorId);
 
-                // Proveravamo da li veza već postoji da ne bi došlo do dupliranja
-                if (!sektor.Radnici.Any(r => r.Id == radnikId))
+                // Provera da li veza već postoji
+                bool vezaPostoji = s.Query<RadiU>().Any(r => r.Radnik.Id == radnikId && r.SektorGdeRadi.Id == sektorId);
+                if (vezaPostoji)
                 {
-                    sektor.Radnici.Add(radnik);
-                    s.Update(sektor);
+                    t.Commit(); // Commit prazne transakcije
+                    return true; // Smatramo uspehom ako veza već postoji
                 }
 
+                var novaVeza = new RadiU
+                {
+                    Radnik = radnik,
+                    SektorGdeRadi = sektor
+                };
+
+                s.Save(novaVeza);
                 t.Commit();
+                return true;
             }
             catch (Exception ex)
             {
                 t?.Rollback();
-                MessageBox.Show($"Došlo je do greške prilikom dodeljivanja radnika sektoru.\n\n{ex.Message}", "Greška", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Došlo je do greške prilikom dodele radnika sektoru.\n\n{ex.Message}", "Greška", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
             }
             finally
             {
@@ -480,13 +490,12 @@ namespace SVEMIRSKA_KOLONIJA
                 s = DataLayer.GetSession();
                 t = s.BeginTransaction();
 
-                var sektor = s.Load<Sektor>(sektorId);
-                var radnik = sektor.Radnici.FirstOrDefault(r => r.Id == radnikId);
+                var vezaZaBrisanje = s.Query<RadiU>()
+                                     .FirstOrDefault(r => r.Radnik.Id == radnikId && r.SektorGdeRadi.Id == sektorId);
 
-                if (radnik != null)
+                if (vezaZaBrisanje != null)
                 {
-                    sektor.Radnici.Remove(radnik);
-                    s.Update(sektor);
+                    s.Delete(vezaZaBrisanje);
                 }
 
                 t.Commit();
@@ -501,7 +510,6 @@ namespace SVEMIRSKA_KOLONIJA
                 s?.Close();
             }
         }
-
 
         #endregion
 

@@ -13,10 +13,9 @@ namespace SVEMIRSKA_KOLONIJA.Mapiranja
             HasOne(x => x.PripadaStanovniku).PropertyRef(nameof(Stanovnik.UcesnikZadatka));
             HasOne(x => x.PripadaRobotu).PropertyRef(nameof(Robot.UcesnikZadatka));
 
-            HasManyToMany(x => x.AngazovanNaZadacima)
-                .Table("ANGAZOVAN_NA")
-                .ParentKeyColumn("UCESNIK_ZADATKA_ID")
-                .ChildKeyColumn("ZADATAK_ID")
+            HasMany(x => x.AngazovanNaZadacima)
+                .KeyColumn("UCESNIK_ZADATKA_ID")
+                .LazyLoad()
                 .Cascade.All()
                 .Inverse();
         }

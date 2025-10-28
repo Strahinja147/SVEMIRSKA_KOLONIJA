@@ -36,7 +36,7 @@
                 var cfg = OracleManagedDataClientConfiguration.Oracle10
                 .ShowSql()
                 .ConnectionString(c =>
-                    c.Is("Data Source=gislab-oracle.elfak.ni.ac.rs:1521/SBP_PDB;User Id=S19089;Password=S19089"));
+                    c.Is("Data Source=gislab-oracle.elfak.ni.ac.rs:1521/SBP_PDB;User Id=S19244;Password=S19244"));
 
                 return Fluently.Configure()
                     .Database(cfg)
