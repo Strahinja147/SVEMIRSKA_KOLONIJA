@@ -129,9 +129,6 @@
             // cmbPol
             // 
             this.cmbPol.FormattingEnabled = true;
-            this.cmbPol.Items.AddRange(new object[] {
-            "M",
-            "Z"});
             this.cmbPol.Location = new System.Drawing.Point(96, 220);
             this.cmbPol.Name = "cmbPol";
             this.cmbPol.Size = new System.Drawing.Size(121, 21);
