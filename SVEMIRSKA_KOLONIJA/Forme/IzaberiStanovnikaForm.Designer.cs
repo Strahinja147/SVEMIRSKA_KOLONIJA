@@ -69,7 +69,7 @@
             // 
             // btnIzaberi
             // 
-            this.btnIzaberi.Location = new System.Drawing.Point(392, 12);
+            this.btnIzaberi.Location = new System.Drawing.Point(332, 206);
             this.btnIzaberi.Name = "btnIzaberi";
             this.btnIzaberi.Size = new System.Drawing.Size(107, 59);
             this.btnIzaberi.TabIndex = 1;
@@ -79,7 +79,7 @@
             // 
             // btnOdustani
             // 
-            this.btnOdustani.Location = new System.Drawing.Point(392, 91);
+            this.btnOdustani.Location = new System.Drawing.Point(332, 280);
             this.btnOdustani.Name = "btnOdustani";
             this.btnOdustani.Size = new System.Drawing.Size(107, 59);
             this.btnOdustani.TabIndex = 2;
@@ -91,7 +91,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(532, 450);
+            this.ClientSize = new System.Drawing.Size(506, 354);
             this.Controls.Add(this.btnOdustani);
             this.Controls.Add(this.btnIzaberi);
             this.Controls.Add(this.lvStanovnici);

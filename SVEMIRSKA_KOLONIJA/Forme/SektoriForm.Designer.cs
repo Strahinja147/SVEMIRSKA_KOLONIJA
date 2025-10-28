@@ -70,9 +70,9 @@
             // 
             // btnDodajSektor
             // 
-            this.btnDodajSektor.Location = new System.Drawing.Point(385, 246);
+            this.btnDodajSektor.Location = new System.Drawing.Point(385, 212);
             this.btnDodajSektor.Name = "btnDodajSektor";
-            this.btnDodajSektor.Size = new System.Drawing.Size(104, 52);
+            this.btnDodajSektor.Size = new System.Drawing.Size(123, 66);
             this.btnDodajSektor.TabIndex = 1;
             this.btnDodajSektor.Text = "Dodaj sektor";
             this.btnDodajSektor.UseVisualStyleBackColor = true;
@@ -80,9 +80,9 @@
             // 
             // btnIzmeniSektor
             // 
-            this.btnIzmeniSektor.Location = new System.Drawing.Point(385, 314);
+            this.btnIzmeniSektor.Location = new System.Drawing.Point(385, 294);
             this.btnIzmeniSektor.Name = "btnIzmeniSektor";
-            this.btnIzmeniSektor.Size = new System.Drawing.Size(104, 56);
+            this.btnIzmeniSektor.Size = new System.Drawing.Size(123, 66);
             this.btnIzmeniSektor.TabIndex = 2;
             this.btnIzmeniSektor.Text = "Izmeni sektor";
             this.btnIzmeniSektor.UseVisualStyleBackColor = true;
@@ -90,9 +90,9 @@
             // 
             // btnObrisiSektor
             // 
-            this.btnObrisiSektor.Location = new System.Drawing.Point(385, 386);
+            this.btnObrisiSektor.Location = new System.Drawing.Point(385, 372);
             this.btnObrisiSektor.Name = "btnObrisiSektor";
-            this.btnObrisiSektor.Size = new System.Drawing.Size(104, 52);
+            this.btnObrisiSektor.Size = new System.Drawing.Size(123, 66);
             this.btnObrisiSektor.TabIndex = 3;
             this.btnObrisiSektor.Text = "Obriši sektor";
             this.btnObrisiSektor.UseVisualStyleBackColor = true;

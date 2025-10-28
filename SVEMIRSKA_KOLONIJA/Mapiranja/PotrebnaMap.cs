@@ -8,7 +8,7 @@ namespace SVEMIRSKA_KOLONIJA.Mapiranja
         public PotrebnaMap()
         {
             Table("POTREBNA");
-            Id(x => x.Id, "POTREBNA_ID").GeneratedBy.Sequence("SEQ_POTREBNA");
+            Id(x => x.Id, "POTREBNA_ID").GeneratedBy.Native("SEQ_POTREBNA");
 
             Map(x => x.Nivo, "NIVO");
 

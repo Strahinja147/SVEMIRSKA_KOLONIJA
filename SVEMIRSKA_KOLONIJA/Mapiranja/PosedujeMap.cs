@@ -11,7 +11,7 @@ namespace SVEMIRSKA_KOLONIJA.Mapiranja
             // ISPRAVLJENO: Ime tabele sa velikim slovima
             Table("POSEDUJE");
 
-            Id(x => x.Id, "POSEDuje_ID").GeneratedBy.Sequence("SEQ_POSEDUJE");
+            Id(x => x.Id, "POSEDuje_ID").GeneratedBy.Native("SEQ_POSEDUJE");
 
             Map(x => x.Institucija, "INSTITUCIJA");
             Map(x => x.DatumSticanja, "DATUM_STICANJA");

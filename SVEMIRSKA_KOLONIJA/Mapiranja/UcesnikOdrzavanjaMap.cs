@@ -9,7 +9,7 @@ namespace SVEMIRSKA_KOLONIJA.Mapiranja
         {
             Table("UCESNIK_ODRZAVANJA");
 
-            Id(x => x.Id, "UCESNIK_ODRZAVANJA_ID").GeneratedBy.Sequence("SEQ_UCESNIK_ODRZAVANJA");
+            Id(x => x.Id, "UCESNIK_ODRZAVANJA_ID").GeneratedBy.Native("SEQ_UCESNIK_ODRZAVANJA");
 
             References(x => x.Ucesnik, "STANOVNIK_ID");
             References(x => x.Odrzavanje, "ZAPIS_ODRZAVANJA_ID");

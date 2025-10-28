@@ -8,7 +8,7 @@ namespace SVEMIRSKA_KOLONIJA.Mapiranja
         public SpecijalizacijaMap()
         {
             Table("SPECIJALIZACIJA");
-            Id(x => x.Id, "SPECIJALIZACIJA_ID").GeneratedBy.Sequence("SEQ_SPECIJALIZACIJA");
+            Id(x => x.Id, "SPECIJALIZACIJA_ID").GeneratedBy.Assigned();
             Map(x => x.Naziv, "NAZIV");
 
             HasMany(x => x.PosedujuStanovnici).KeyColumn("SPECIJALIZACIJA_ID").LazyLoad().Cascade.All().Inverse();

@@ -137,11 +137,35 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forme\DodajIzmeniRobotaForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forme\DodajIzmeniRobotaForm.Designer.cs">
+      <DependentUpon>DodajIzmeniRobotaForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forme\DodajIzmeniSektorForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forme\DodajIzmeniSektorForm.Designer.cs">
       <DependentUpon>DodajIzmeniSektorForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forme\DodajIzmeniSpecijalizacijuForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forme\DodajIzmeniSpecijalizacijuForm.Designer.cs">
+      <DependentUpon>DodajIzmeniSpecijalizacijuForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forme\DodajKontaktForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forme\DodajKontaktForm.Designer.cs">
+      <DependentUpon>DodajKontaktForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forme\DodajSpecijalizacijuStanovnikuForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forme\DodajSpecijalizacijuStanovnikuForm.Designer.cs">
+      <DependentUpon>DodajSpecijalizacijuStanovnikuForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forme\DodajStanovnikaForm.cs">
       <SubType>Form</SubType>
@@ -155,11 +179,23 @@
     <Compile Include="Forme\IzaberiStanovnikaForm.Designer.cs">
       <DependentUpon>IzaberiStanovnikaForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forme\RobotiForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forme\RobotiForm.Designer.cs">
+      <DependentUpon>RobotiForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forme\SektoriForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forme\SektoriForm.Designer.cs">
       <DependentUpon>SektoriForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forme\SpecijalizacijeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forme\SpecijalizacijeForm.Designer.cs">
+      <DependentUpon>SpecijalizacijeForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forme\StanovniciForm.cs">
       <SubType>Form</SubType>
@@ -194,8 +230,20 @@
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forme\DodajIzmeniRobotaForm.resx">
+      <DependentUpon>DodajIzmeniRobotaForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forme\DodajIzmeniSektorForm.resx">
       <DependentUpon>DodajIzmeniSektorForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forme\DodajIzmeniSpecijalizacijuForm.resx">
+      <DependentUpon>DodajIzmeniSpecijalizacijuForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forme\DodajKontaktForm.resx">
+      <DependentUpon>DodajKontaktForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forme\DodajSpecijalizacijuStanovnikuForm.resx">
+      <DependentUpon>DodajSpecijalizacijuStanovnikuForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forme\DodajStanovnikaForm.resx">
       <DependentUpon>DodajStanovnikaForm.cs</DependentUpon>
@@ -203,8 +251,14 @@
     <EmbeddedResource Include="Forme\IzaberiStanovnikaForm.resx">
       <DependentUpon>IzaberiStanovnikaForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forme\RobotiForm.resx">
+      <DependentUpon>RobotiForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forme\SektoriForm.resx">
       <DependentUpon>SektoriForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forme\SpecijalizacijeForm.resx">
+      <DependentUpon>SpecijalizacijeForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forme\StanovniciForm.resx">
       <DependentUpon>StanovniciForm.cs</DependentUpon>

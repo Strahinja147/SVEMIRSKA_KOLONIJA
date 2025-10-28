@@ -8,7 +8,7 @@ namespace SVEMIRSKA_KOLONIJA.Mapiranja
         public RobotMap()
         {
             Table("ROBOT");
-            Id(x => x.Id, "ROBOT_ID").GeneratedBy.Sequence("SEQ_ROBOT");
+            Id(x => x.Id, "ROBOT_ID").GeneratedBy.Native("SEQ_ROBOT");
 
             Map(x => x.Tip, "TIP");
             Map(x => x.Sifra, "SIFRA");

@@ -1,5 +1,6 @@
 ﻿using SVEMIRSKA_KOLONIJA.DTOs;
 using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace SVEMIRSKA_KOLONIJA.Forme
@@ -7,10 +8,11 @@ namespace SVEMIRSKA_KOLONIJA.Forme
     public partial class IzaberiStanovnikaForm : Form
     {
         public StanovnikPregled IzabraniStanovnik { get; private set; }
-
-        public IzaberiStanovnikaForm()
+        private List<int> idZaIzbegavanje;
+        public IzaberiStanovnikaForm(List<int> postojeciIdjevi = null)
         {
             InitializeComponent();
+            this.idZaIzbegavanje = postojeciIdjevi ?? new List<int>();
         }
 
         private void IzaberiStanovnikaForm_Load(object sender, EventArgs e)
@@ -26,9 +28,12 @@ namespace SVEMIRSKA_KOLONIJA.Forme
 
             foreach (var s in stanovnici)
             {
-                ListViewItem item = new ListViewItem(new string[] { s.Id.ToString(), s.Ime, s.Prezime });
-                item.Tag = s;
-                lvStanovnici.Items.Add(item);
+                if (!this.idZaIzbegavanje.Contains(s.Id))
+                {
+                    ListViewItem item = new ListViewItem(new string[] { s.Id.ToString(), s.Ime, s.Prezime });
+                    item.Tag = s;
+                    lvStanovnici.Items.Add(item);
+                }
             }
 
             lvStanovnici.Refresh();

@@ -85,7 +85,8 @@ namespace SVEMIRSKA_KOLONIJA
                         NazivSpecijalizacije = p.Specijalizacija.Naziv,
                         NivoEkspertize = p.NivoEkspertize,
                         DatumSticanja = p.DatumSticanja,
-                        Institucija = p.Institucija
+                        Institucija = p.Institucija,
+                        Specijalizacija = new SpecijalizacijaPregled { Id = p.Specijalizacija.Id, Naziv = p.Specijalizacija.Naziv }
                     }).ToList(),
 
                     SektoriKojeVodi = st.SektoriKojeVodi.Select(sek => new SektorPregled
@@ -124,7 +125,7 @@ namespace SVEMIRSKA_KOLONIJA
         /// <summary>
         /// Dodaje novog stanovnika u bazu unutar transakcije.
         /// </summary>
-        public static void DodajStanovnika(StanovnikDetalji p)
+        public static Stanovnik DodajStanovnika(StanovnikDetalji p)
         {
             ISession s = null;
             ITransaction t = null;
@@ -146,11 +147,13 @@ namespace SVEMIRSKA_KOLONIJA
 
                 s.Save(stanovnik);
                 t.Commit();
+                return stanovnik; // VRAĆAMO SAČUVANI ENTITET SA NOVIM ID-JEM
             }
             catch (Exception ex)
             {
                 t?.Rollback();
                 MessageBox.Show($"Došlo je do greške prilikom dodavanja stanovnika.\n\n{ex.Message}", "Greška", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return null;
             }
             finally
             {
@@ -325,7 +328,7 @@ namespace SVEMIRSKA_KOLONIJA
         /// <summary>
         /// Dodaje novi sektor u bazu unutar transakcije.
         /// </summary>
-        public static void DodajSektor(SektorDetalji p)
+        public static Sektor DodajSektor(SektorDetalji p)
         {
             ISession s = null;
             ITransaction t = null;
@@ -351,11 +354,13 @@ namespace SVEMIRSKA_KOLONIJA
 
                 s.Save(sektor);
                 t.Commit();
+                return sektor;
             }
             catch (Exception ex)
             {
                 t?.Rollback();
                 MessageBox.Show($"Došlo je do greške prilikom dodavanja sektora.\n\n{ex.Message}", "Greška", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return null;
             }
             finally
             {
@@ -902,6 +907,7 @@ namespace SVEMIRSKA_KOLONIJA
                 {
                     Sifra = p.Sifra,
                     Tip = p.Tip
+                    // UcesnikZadatka se namerno ostavlja kao null
                 };
 
                 if (p.OdgovorniStanovnik != null)
@@ -1280,6 +1286,87 @@ namespace SVEMIRSKA_KOLONIJA
             return specijalizacije;
         }
 
+        public static void DodajSpecijalizaciju(SpecijalizacijaPregled p)
+        {
+            ISession s = null;
+            ITransaction t = null;
+            try
+            {
+                s = DataLayer.GetSession();
+                t = s.BeginTransaction();
+
+                var specijalizacija = new Specijalizacija
+                {
+                    Naziv = p.Naziv
+                };
+                var noviId = s.CreateSQLQuery("SELECT SEQ_SPECIJALIZACIJA.NEXTVAL FROM DUAL").UniqueResult<decimal>();
+                specijalizacija.Id = Convert.ToInt32(noviId);
+
+                s.Save(specijalizacija);
+                t.Commit();
+            }
+            catch (Exception ex)
+            {
+                t?.Rollback();
+                MessageBox.Show($"Došlo je do greške prilikom dodavanja specijalizacije.\n\n{ex.Message}", "Greška", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                s?.Close();
+            }
+        }
+
+        public static void AzurirajSpecijalizaciju(SpecijalizacijaPregled p)
+        {
+            ISession s = null;
+            ITransaction t = null;
+            try
+            {
+                s = DataLayer.GetSession();
+                t = s.BeginTransaction();
+
+                var specijalizacija = s.Load<Specijalizacija>(p.Id);
+                specijalizacija.Naziv = p.Naziv;
+
+                s.Update(specijalizacija);
+                t.Commit();
+            }
+            catch (Exception ex)
+            {
+                t?.Rollback();
+                MessageBox.Show($"Došlo je do greške prilikom ažuriranja specijalizacije.\n\n{ex.Message}", "Greška", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                s?.Close();
+            }
+        }
+
+        public static void ObrisiSpecijalizaciju(int id)
+        {
+            ISession s = null;
+            ITransaction t = null;
+            try
+            {
+                s = DataLayer.GetSession();
+                t = s.BeginTransaction();
+
+                var specijalizacija = s.Load<Specijalizacija>(id);
+                s.Delete(specijalizacija);
+
+                t.Commit();
+            }
+            catch (Exception ex)
+            {
+                t?.Rollback();
+                MessageBox.Show($"Došlo je do greške prilikom brisanja specijalizacije. Proverite da li je neki stanovnik i dalje poseduje.\n\n{ex.Message}", "Greška", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                s?.Close();
+            }
+        }
+
         #endregion
 
         #region ZapisOdrzavanja
@@ -1449,9 +1536,9 @@ namespace SVEMIRSKA_KOLONIJA
                     Ime = p.Ime,
                     Odnos = p.Odnos
                 };
+                var noviId = s.CreateSQLQuery("SELECT SEQ_KONTAKT_NA_ZEMLJI.NEXTVAL FROM DUAL").UniqueResult<decimal>();
+                kontakt.Id = Convert.ToInt32(noviId);
 
-
-                // Dodavanje višeznačnog atributa
                 foreach (var info in p.KontaktInformacije)
                 {
                     var konInfo = new KonZemInf
@@ -1503,6 +1590,7 @@ namespace SVEMIRSKA_KOLONIJA
                 s?.Close();
             }
         }
+
 
         #endregion
     }

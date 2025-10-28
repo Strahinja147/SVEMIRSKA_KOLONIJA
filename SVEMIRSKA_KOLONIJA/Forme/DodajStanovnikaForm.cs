@@ -1,5 +1,6 @@
 ﻿using SVEMIRSKA_KOLONIJA.DTOs;
 using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace SVEMIRSKA_KOLONIJA.Forme
@@ -7,6 +8,8 @@ namespace SVEMIRSKA_KOLONIJA.Forme
     public partial class DodajStanovnikaForm : Form
     {
         private StanovnikDetalji Stanovnik;
+        private List<PosedujePregled> privremeneSpecijalizacije;
+        private List<KontaktNaZemljiPregled> privremeniKontakti;
 
         // Konstruktor za DODAVANJE
         public DodajStanovnikaForm()
@@ -14,15 +17,20 @@ namespace SVEMIRSKA_KOLONIJA.Forme
             InitializeComponent();
             this.Text = "DODAJ NOVOG STANOVNIKA";
             groupBoxPovezaniPodaci.Visible = false;
+            this.Stanovnik = new StanovnikDetalji();
+            this.privremeneSpecijalizacije = new List<PosedujePregled>();
+            this.privremeniKontakti = new List<KontaktNaZemljiPregled>();
         }
 
         // Konstruktor za IZMENU
         public DodajStanovnikaForm(StanovnikDetalji stanovnik)
         {
             InitializeComponent();
-            this.Stanovnik = stanovnik;
+            this.Stanovnik = stanovnik ?? new StanovnikDetalji();
             this.Text = $"IZMENI STANOVNIKA: {stanovnik.Ime} {stanovnik.Prezime}";
             //PopuniPodacima();
+            this.privremeneSpecijalizacije = new List<PosedujePregled>(this.Stanovnik.Specijalizacije);
+            this.privremeniKontakti = new List<KontaktNaZemljiPregled>(stanovnik.KontaktiNaZemlji ?? new List<KontaktNaZemljiPregled>());
         }
 
         private void DodajStanovnikaForm_Load(object sender, EventArgs e)
@@ -64,7 +72,7 @@ namespace SVEMIRSKA_KOLONIJA.Forme
                 listViewKontakti.Columns.Add("Ime", 120);
                 listViewKontakti.Columns.Add("Odnos", 80);
             }
-            foreach (var kontakt in this.Stanovnik.KontaktiNaZemlji)
+            foreach (var kontakt in this.privremeniKontakti)
             {
                 listViewKontakti.Items.Add(new ListViewItem(new string[] { kontakt.Ime, kontakt.Odnos }));
             }
@@ -77,9 +85,10 @@ namespace SVEMIRSKA_KOLONIJA.Forme
                 listViewSpecijalizacije.Columns.Add("Naziv", 150);
                 listViewSpecijalizacije.Columns.Add("Nivo Ekspertize", 100);
             }
-            foreach (var spec in this.Stanovnik.Specijalizacije)
+            foreach (var spec in this.privremeneSpecijalizacije)
             {
-                listViewSpecijalizacije.Items.Add(new ListViewItem(new string[] { spec.NazivSpecijalizacije, spec.NivoEkspertize }));
+                string naziv = spec.Specijalizacija?.Naziv ?? spec.NazivSpecijalizacije;
+                listViewSpecijalizacije.Items.Add(new ListViewItem(new string[] { naziv, spec.NivoEkspertize }));
             }
             listViewSpecijalizacije.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
 
@@ -110,7 +119,18 @@ namespace SVEMIRSKA_KOLONIJA.Forme
 
             if (this.Stanovnik.Id == 0)
             {
-                DTOManager.DodajStanovnika(this.Stanovnik);
+                var sacuvaniStanovnik = DTOManager.DodajStanovnika(this.Stanovnik);
+                if (sacuvaniStanovnik != null)
+                {
+                    foreach (var spec in this.privremeneSpecijalizacije)
+                    {
+                        DTOManager.DodajSpecijalizacijuStanovniku(sacuvaniStanovnik.Id, spec.Specijalizacija.Id, spec);
+                    }
+                    foreach (var kontakt in this.privremeniKontakti)
+                    {
+                        DTOManager.DodajKontaktZaStanovnika(sacuvaniStanovnik.Id, kontakt);
+                    }
+                }
             }
             else
             {
@@ -120,5 +140,42 @@ namespace SVEMIRSKA_KOLONIJA.Forme
             MessageBox.Show("Podaci su uspešno sačuvani!", "Informacija", MessageBoxButtons.OK, MessageBoxIcon.Information);
             this.Close();
         }
+
+        private void btnDodajSpecijalizaciju_Click(object sender, EventArgs e)
+        {
+            DodajSpecijalizacijuStanovnikuForm form = new DodajSpecijalizacijuStanovnikuForm();
+
+            if (form.ShowDialog() == DialogResult.OK)
+            {
+                var novaSpecijalizacija = form.NovaSpecijalizacija;
+                novaSpecijalizacija.NazivSpecijalizacije = novaSpecijalizacija.Specijalizacija.Naziv;
+
+                if (this.Stanovnik != null && this.Stanovnik.Id != 0 )
+                {
+                    DTOManager.DodajSpecijalizacijuStanovniku(this.Stanovnik.Id, novaSpecijalizacija.Specijalizacija.Id, novaSpecijalizacija);
+                }
+
+                this.privremeneSpecijalizacije.Add(novaSpecijalizacija);
+                PopuniPovezanePodatke();
+            }
+        }
+
+        private void btnDodajKontakt_Click(object sender, EventArgs e)
+        {
+            DodajKontaktForm form = new DodajKontaktForm();
+            if (form.ShowDialog() == DialogResult.OK)
+            {
+                var noviKontakt = form.NoviKontakt;
+
+                if (this.Stanovnik.Id != 0)
+                {
+                    DTOManager.DodajKontaktZaStanovnika(this.Stanovnik.Id, noviKontakt);
+                }
+
+                this.privremeniKontakti.Add(noviKontakt);
+                PopuniPovezanePodatke();
+            }
+        }
     }
+
 }

@@ -4,7 +4,7 @@ namespace SVEMIRSKA_KOLONIJA.Entiteti
 {
     public class Specijalizacija
     {
-        public virtual int Id { get; protected set; }
+        public virtual int Id { get; set; }
         public virtual string Naziv { get; set; }
 
         public virtual IList<Poseduje> PosedujuStanovnici { get; set; }

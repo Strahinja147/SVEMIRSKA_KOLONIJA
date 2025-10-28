@@ -196,6 +196,7 @@ namespace SVEMIRSKA_KOLONIJA.DTOs
         public string NivoEkspertize { get; set; }
         public DateTime? DatumSticanja { get; set; }
         public string Institucija { get; set; }
+        public SpecijalizacijaPregled Specijalizacija { get; set; }
     }
 
     public class PotrebnaPregled

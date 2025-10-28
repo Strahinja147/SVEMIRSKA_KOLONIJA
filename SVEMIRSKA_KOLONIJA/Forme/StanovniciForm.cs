@@ -36,7 +36,7 @@ namespace SVEMIRSKA_KOLONIJA.Forme
         public void UcitajPodatke()
         {
             listViewStanovnici.Items.Clear();
-            List<StanovnikPregled> podaci = DTOManager.VratiSveStanovnike();
+            List<StanovnikPregled> podaci = DTOManager.VratiSveStanovnike().OrderBy(s => s.Id).ToList();
 
             foreach (StanovnikPregled sp in podaci)
             {
