@@ -39,7 +39,7 @@ namespace SVEMIRSKA_KOLONIJA.Forme
         private void PopuniPodatke()
         {
             txtNaziv.Text = sektorZaObradu.Naziv;
-            txtTipSektora.Text = sektorZaObradu.TipSektora;
+            cmbTipSektora.Text = sektorZaObradu.TipSektora;
             txtKapacitet.Text = sektorZaObradu.Kapacitet.ToString();
             txtPovrsina.Text = sektorZaObradu.Povrsina.ToString();
 
@@ -110,10 +110,21 @@ namespace SVEMIRSKA_KOLONIJA.Forme
             }
 
             sektorZaObradu.Naziv = txtNaziv.Text;
-            sektorZaObradu.TipSektora = txtTipSektora.Text;
-            int.TryParse(txtKapacitet.Text, out int kapacitet);
+            sektorZaObradu.TipSektora = cmbTipSektora.Text;
+            bool vrednostKap = int.TryParse(txtKapacitet.Text, out int kapacitet);
+            if (vrednostKap == false || kapacitet < 0)
+            {
+                MessageBox.Show("Uneli ste losu vrednost za kapacitet!");
+                return;
+            }
             sektorZaObradu.Kapacitet = kapacitet;
-            double.TryParse(txtPovrsina.Text, out double povrsina);
+
+            bool vrednostPov = double.TryParse(txtPovrsina.Text, out double povrsina);
+            if (vrednostPov == false || povrsina < 0)
+            {
+                MessageBox.Show("Uneli ste losu vrednost za povrsinu!");
+                return;
+            }
             sektorZaObradu.Povrsina = povrsina;
 
             if (sektorZaObradu.Id == 0)
@@ -158,7 +169,7 @@ namespace SVEMIRSKA_KOLONIJA.Forme
                 {
                     this.sektorZaObradu.Radnici.Remove(radnikZaUklanjanje);
                 }
-
+                privremeniRadnici.Remove(izabraniRadnik);
                 PopuniListuRadnika();
                 MessageBox.Show("Radnik uspešno uklonjen iz sektora.");
             }

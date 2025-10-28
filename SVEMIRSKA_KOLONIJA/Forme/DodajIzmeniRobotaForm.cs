@@ -1,5 +1,6 @@
 ﻿using SVEMIRSKA_KOLONIJA.DTOs;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -46,7 +47,7 @@ namespace SVEMIRSKA_KOLONIJA.Forme
         private void PopuniPodatke()
         {
             txtSifra.Text = robotZaObradu.Sifra;
-            txtTip.Text = robotZaObradu.Tip;
+            cmbTipRobota.Text = robotZaObradu.Tip;
 
             if (robotZaObradu.OdgovorniStanovnik != null)
             {
@@ -93,7 +94,7 @@ namespace SVEMIRSKA_KOLONIJA.Forme
             }
 
             robotZaObradu.Sifra = txtSifra.Text;
-            robotZaObradu.Tip = txtTip.Text;
+            robotZaObradu.Tip = cmbTipRobota.Text;
 
             if (cmbSektor.SelectedItem != null)
             {

@@ -66,9 +66,13 @@ namespace SVEMIRSKA_KOLONIJA.Forme
 
             if (dr == DialogResult.Yes)
             {
-                DTOManager.ObrisiSektor(izabraniSektor.Id);
-                MessageBox.Show("Sektor uspešno obrisan!");
-                this.PopuniPodacima();
+                
+                bool validnoObrisan = DTOManager.ObrisiSektor(izabraniSektor.Id);
+                if (validnoObrisan)
+                {
+                    MessageBox.Show("Sektor uspešno obrisan!");
+                    this.PopuniPodacima();
+                }
             }
         }
     }

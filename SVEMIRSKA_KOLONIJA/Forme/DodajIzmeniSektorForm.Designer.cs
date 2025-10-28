@@ -34,7 +34,6 @@
             this.labelPovrsina = new System.Windows.Forms.Label();
             this.labelVodja = new System.Windows.Forms.Label();
             this.txtNaziv = new System.Windows.Forms.TextBox();
-            this.txtTipSektora = new System.Windows.Forms.TextBox();
             this.txtKapacitet = new System.Windows.Forms.TextBox();
             this.txtPovrsina = new System.Windows.Forms.TextBox();
             this.txtVodjaSektora = new System.Windows.Forms.TextBox();
@@ -47,6 +46,7 @@
             this.btnDodeliRadnika = new System.Windows.Forms.Button();
             this.btnSnimi = new System.Windows.Forms.Button();
             this.btnUkloniRadnika = new System.Windows.Forms.Button();
+            this.cmbTipSektora = new System.Windows.Forms.ComboBox();
             this.gbRadnici.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -101,13 +101,6 @@
             this.txtNaziv.Name = "txtNaziv";
             this.txtNaziv.Size = new System.Drawing.Size(166, 20);
             this.txtNaziv.TabIndex = 5;
-            // 
-            // txtTipSektora
-            // 
-            this.txtTipSektora.Location = new System.Drawing.Point(139, 58);
-            this.txtTipSektora.Name = "txtTipSektora";
-            this.txtTipSektora.Size = new System.Drawing.Size(166, 20);
-            this.txtTipSektora.TabIndex = 6;
             // 
             // txtKapacitet
             // 
@@ -212,11 +205,26 @@
             this.btnUkloniRadnika.UseVisualStyleBackColor = true;
             this.btnUkloniRadnika.Click += new System.EventHandler(this.btnUkloniRadnika_Click);
             // 
+            // cmbTipSektora
+            // 
+            this.cmbTipSektora.FormattingEnabled = true;
+            this.cmbTipSektora.Items.AddRange(new object[] {
+            "Laboratorija ",
+            "Biosfera ",
+            "Spavaonica ",
+            "Upravni centar",
+            "Magacin"});
+            this.cmbTipSektora.Location = new System.Drawing.Point(139, 62);
+            this.cmbTipSektora.Name = "cmbTipSektora";
+            this.cmbTipSektora.Size = new System.Drawing.Size(166, 21);
+            this.cmbTipSektora.TabIndex = 15;
+            // 
             // DodajIzmeniSektorForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(476, 450);
+            this.Controls.Add(this.cmbTipSektora);
             this.Controls.Add(this.btnUkloniRadnika);
             this.Controls.Add(this.btnSnimi);
             this.Controls.Add(this.btnDodeliRadnika);
@@ -225,7 +233,6 @@
             this.Controls.Add(this.txtVodjaSektora);
             this.Controls.Add(this.txtPovrsina);
             this.Controls.Add(this.txtKapacitet);
-            this.Controls.Add(this.txtTipSektora);
             this.Controls.Add(this.txtNaziv);
             this.Controls.Add(this.labelVodja);
             this.Controls.Add(this.labelPovrsina);
@@ -249,7 +256,6 @@
         private System.Windows.Forms.Label labelPovrsina;
         private System.Windows.Forms.Label labelVodja;
         private System.Windows.Forms.TextBox txtNaziv;
-        private System.Windows.Forms.TextBox txtTipSektora;
         private System.Windows.Forms.TextBox txtPovrsina;
         private System.Windows.Forms.TextBox txtVodjaSektora;
         private System.Windows.Forms.TextBox txtKapacitet;
@@ -262,5 +268,6 @@
         private System.Windows.Forms.Button btnDodeliRadnika;
         private System.Windows.Forms.Button btnSnimi;
         private System.Windows.Forms.Button btnUkloniRadnika;
+        private System.Windows.Forms.ComboBox cmbTipSektora;
     }
 }

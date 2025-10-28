@@ -415,10 +415,11 @@ namespace SVEMIRSKA_KOLONIJA
         /// <summary>
         /// Briše sektor iz baze unutar transakcije.
         /// </summary>
-        public static void ObrisiSektor(int id)
+        public static bool ObrisiSektor(int id)
         {
             ISession s = null;
             ITransaction t = null;
+            bool validnoObrisan = false;
             try
             {
                 s = DataLayer.GetSession();
@@ -428,12 +429,15 @@ namespace SVEMIRSKA_KOLONIJA
                 s.Delete(sektor);
 
                 t.Commit();
+                validnoObrisan = true;
+                return validnoObrisan;
             }
             catch (Exception ex)
             {
                 t?.Rollback();
                 // Najčešća greška ovde je foreign key constraint - ako resursi, roboti ili radnici i dalje postoje u ovom sektoru.
                 MessageBox.Show($"Došlo je do greške prilikom brisanja sektora. Proverite da li postoje resursi ili roboti koji su i dalje vezani za ovaj sektor.\n\n{ex.Message}", "Greška", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return validnoObrisan;
             }
             finally
             {

@@ -34,13 +34,13 @@
             this.labelProgramer = new System.Windows.Forms.Label();
             this.labelSektor = new System.Windows.Forms.Label();
             this.txtSifra = new System.Windows.Forms.TextBox();
-            this.txtTip = new System.Windows.Forms.TextBox();
             this.txtOdgovorni = new System.Windows.Forms.TextBox();
             this.txtProgramer = new System.Windows.Forms.TextBox();
             this.cmbSektor = new System.Windows.Forms.ComboBox();
             this.btnIzaberiOdgovornog = new System.Windows.Forms.Button();
             this.btnIzaberiProgramera = new System.Windows.Forms.Button();
             this.btnSnimi = new System.Windows.Forms.Button();
+            this.cmbTipRobota = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // labelSifra
@@ -95,13 +95,6 @@
             this.txtSifra.Size = new System.Drawing.Size(170, 20);
             this.txtSifra.TabIndex = 5;
             // 
-            // txtTip
-            // 
-            this.txtTip.Location = new System.Drawing.Point(146, 80);
-            this.txtTip.Name = "txtTip";
-            this.txtTip.Size = new System.Drawing.Size(170, 20);
-            this.txtTip.TabIndex = 6;
-            // 
             // txtOdgovorni
             // 
             this.txtOdgovorni.Location = new System.Drawing.Point(146, 112);
@@ -155,18 +148,32 @@
             this.btnSnimi.UseVisualStyleBackColor = true;
             this.btnSnimi.Click += new System.EventHandler(this.btnSnimi_Click);
             // 
+            // cmbTipRobota
+            // 
+            this.cmbTipRobota.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbTipRobota.FormattingEnabled = true;
+            this.cmbTipRobota.Items.AddRange(new object[] {
+            "Transportni",
+            "Inženjerski",
+            "Medicinski",
+            "Nadzorni"});
+            this.cmbTipRobota.Location = new System.Drawing.Point(146, 80);
+            this.cmbTipRobota.Name = "cmbTipRobota";
+            this.cmbTipRobota.Size = new System.Drawing.Size(170, 21);
+            this.cmbTipRobota.TabIndex = 14;
+            // 
             // DodajIzmeniRobotaForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(494, 284);
+            this.Controls.Add(this.cmbTipRobota);
             this.Controls.Add(this.btnSnimi);
             this.Controls.Add(this.btnIzaberiProgramera);
             this.Controls.Add(this.btnIzaberiOdgovornog);
             this.Controls.Add(this.cmbSektor);
             this.Controls.Add(this.txtProgramer);
             this.Controls.Add(this.txtOdgovorni);
-            this.Controls.Add(this.txtTip);
             this.Controls.Add(this.txtSifra);
             this.Controls.Add(this.labelSektor);
             this.Controls.Add(this.labelProgramer);
@@ -189,12 +196,12 @@
         private System.Windows.Forms.Label labelProgramer;
         private System.Windows.Forms.Label labelSektor;
         private System.Windows.Forms.TextBox txtSifra;
-        private System.Windows.Forms.TextBox txtTip;
         private System.Windows.Forms.TextBox txtOdgovorni;
         private System.Windows.Forms.TextBox txtProgramer;
         private System.Windows.Forms.ComboBox cmbSektor;
         private System.Windows.Forms.Button btnIzaberiOdgovornog;
         private System.Windows.Forms.Button btnIzaberiProgramera;
         private System.Windows.Forms.Button btnSnimi;
+        private System.Windows.Forms.ComboBox cmbTipRobota;
     }
 }
