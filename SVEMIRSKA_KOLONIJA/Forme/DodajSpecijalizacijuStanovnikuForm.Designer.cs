@@ -33,10 +33,10 @@
             this.labelDatum = new System.Windows.Forms.Label();
             this.labelInstitucija = new System.Windows.Forms.Label();
             this.cmbSpecijalizacija = new System.Windows.Forms.ComboBox();
-            this.txtNivoEkspertize = new System.Windows.Forms.TextBox();
             this.dtpDatumSticanja = new System.Windows.Forms.DateTimePicker();
             this.txtInstitucija = new System.Windows.Forms.TextBox();
             this.btnSnimi = new System.Windows.Forms.Button();
+            this.cmbNivoEks = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // labelSpecijalizacija
@@ -85,13 +85,6 @@
             this.cmbSpecijalizacija.TabIndex = 4;
             this.cmbSpecijalizacija.TabStop = false;
             // 
-            // txtNivoEkspertize
-            // 
-            this.txtNivoEkspertize.Location = new System.Drawing.Point(150, 70);
-            this.txtNivoEkspertize.Name = "txtNivoEkspertize";
-            this.txtNivoEkspertize.Size = new System.Drawing.Size(179, 20);
-            this.txtNivoEkspertize.TabIndex = 5;
-            // 
             // dtpDatumSticanja
             // 
             this.dtpDatumSticanja.Location = new System.Drawing.Point(150, 109);
@@ -116,15 +109,29 @@
             this.btnSnimi.UseVisualStyleBackColor = true;
             this.btnSnimi.Click += new System.EventHandler(this.btnSnimi_Click);
             // 
+            // cmbNivoEks
+            // 
+            this.cmbNivoEks.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbNivoEks.FormattingEnabled = true;
+            this.cmbNivoEks.Items.AddRange(new object[] {
+            "Osnovni",
+            "Srednji",
+            "Napredni"});
+            this.cmbNivoEks.Location = new System.Drawing.Point(150, 70);
+            this.cmbNivoEks.Name = "cmbNivoEks";
+            this.cmbNivoEks.Size = new System.Drawing.Size(179, 21);
+            this.cmbNivoEks.TabIndex = 9;
+            this.cmbNivoEks.TabStop = false;
+            // 
             // DodajSpecijalizacijuStanovnikuForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(372, 298);
+            this.Controls.Add(this.cmbNivoEks);
             this.Controls.Add(this.btnSnimi);
             this.Controls.Add(this.txtInstitucija);
             this.Controls.Add(this.dtpDatumSticanja);
-            this.Controls.Add(this.txtNivoEkspertize);
             this.Controls.Add(this.cmbSpecijalizacija);
             this.Controls.Add(this.labelInstitucija);
             this.Controls.Add(this.labelDatum);
@@ -145,9 +152,9 @@
         private System.Windows.Forms.Label labelDatum;
         private System.Windows.Forms.Label labelInstitucija;
         private System.Windows.Forms.ComboBox cmbSpecijalizacija;
-        private System.Windows.Forms.TextBox txtNivoEkspertize;
         private System.Windows.Forms.DateTimePicker dtpDatumSticanja;
         private System.Windows.Forms.TextBox txtInstitucija;
         private System.Windows.Forms.Button btnSnimi;
+        private System.Windows.Forms.ComboBox cmbNivoEks;
     }
 }

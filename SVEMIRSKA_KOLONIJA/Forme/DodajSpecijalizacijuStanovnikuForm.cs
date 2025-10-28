@@ -35,13 +35,14 @@ namespace SVEMIRSKA_KOLONIJA.Forme
             }
 
             var izabranaSpecijalizacija = (SpecijalizacijaPregled)cmbSpecijalizacija.SelectedItem;
+            var izabranNivoEkspertize = cmbNivoEks.SelectedItem;
 
             this.NovaSpecijalizacija = new PosedujePregled
             {
                 Specijalizacija = izabranaSpecijalizacija,
                 // ---- KLJUČNA ISPRAVKA ----
                 NazivSpecijalizacije = izabranaSpecijalizacija.Naziv,
-                NivoEkspertize = txtNivoEkspertize.Text,
+                NivoEkspertize = izabranNivoEkspertize.ToString(),
                 DatumSticanja = dtpDatumSticanja.Value,
                 Institucija = txtInstitucija.Text
             };
