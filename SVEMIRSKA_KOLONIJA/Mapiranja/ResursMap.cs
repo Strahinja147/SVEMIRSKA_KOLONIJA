@@ -8,7 +8,7 @@ namespace SVEMIRSKA_KOLONIJA.Mapiranja
         public ResursMap()
         {
             Table("RESURS");
-            Id(x => x.Id, "RESURS_ID").GeneratedBy.Native("SEQ_RESURS");
+            Id(x => x.Id, "RESURS_ID").GeneratedBy.Sequence("SEQ_RESURS");
 
             Map(x => x.Naziv, "NAZIV");
             Map(x => x.TrenutnaKolicina, "TRENUTNA_KOLICINA");
@@ -21,12 +21,11 @@ namespace SVEMIRSKA_KOLONIJA.Mapiranja
                 .Cascade.AllDeleteOrphan() // Obavezno!
                 .Inverse();
 
-            HasManyToMany(x => x.Upravitelji)
-                .Table("UPRAVLJA_RESURSOM")
-                .ParentKeyColumn("RESURS_ID")
-                .ChildKeyColumn("STANOVNIK_ID")
-                .Cascade.All()
-                .Inverse();
+            // IZMENA: HasMany mapiranje ka prelaznom entitetu
+            HasMany(x => x.UpravljaVeze)
+                .KeyColumn("RESURS_ID")
+                .Cascade.AllDeleteOrphan() // Briše vezu ako se ukloni iz liste
+                .Inverse(); // Neophodno za HasMany
         }
     }
 }

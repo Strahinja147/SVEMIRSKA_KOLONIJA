@@ -1084,12 +1084,13 @@ namespace SVEMIRSKA_KOLONIJA
                         TipSektora = r.Sektor.TipSektora
                     } : null,
 
-                    Upravitelji = r.Upravitelji.Select(u => new StanovnikPregled
+                    // IZMENA: Navigacija preko prelaznog entiteta
+                    Upravitelji = r.UpravljaVeze.Select(veza => new StanovnikPregled
                     {
-                        Id = u.Id,
-                        Ime = u.Ime,
-                        Prezime = u.Prezime,
-                        Zanimanje = u.Zanimanje
+                        Id = veza.Stanovnik.Id,
+                        Ime = veza.Stanovnik.Ime,
+                        Prezime = veza.Stanovnik.Prezime,
+                        Zanimanje = veza.Stanovnik.Zanimanje
                     }).ToList(),
 
                     PotrosnjaPoSektorima = r.PotrosnjaPoSektorima.Select(p => new TrosiPregled
@@ -1116,15 +1117,16 @@ namespace SVEMIRSKA_KOLONIJA
         /// <summary>
         /// Dodaje novi resurs u bazu unutar transakcije.
         /// </summary>
-        public static void DodajResurs(ResursDetalji p)
+        public static bool DodajResurs(ResursDetalji p)
         {
             ISession s = null;
             ITransaction t = null;
+            bool validno = true;
             try
             {
                 s = DataLayer.GetSession();
                 t = s.BeginTransaction();
-
+                 
                 var resurs = new Resurs
                 {
                     Naziv = p.Naziv,
@@ -1137,22 +1139,34 @@ namespace SVEMIRSKA_KOLONIJA
                     resurs.Sektor = skladiste;
                 }
 
-                // Veza M-N (Upravitelji) se obično dodaje naknadno
-                // kroz posebnu funkciju, npr. DodajUpraviteljaResursu(resursId, stanovnikId)
-                // Ovde je izostavljeno radi jednostavnosti DTO-a.
+                s.Save(resurs); // Čuvamo resurs da bi dobio ID
 
-                s.Save(resurs);
+                // NOVI DEO: Odmah nakon čuvanja, dodajemo veze
+                foreach (var upraviteljDTO in p.Upravitelji)
+                {
+                    var stanovnik = s.Load<Stanovnik>(upraviteljDTO.Id);
+                    var novaVeza = new UpravljaResursom
+                    {
+                        Resurs = resurs,
+                        Stanovnik = stanovnik
+                    };
+                    s.Save(novaVeza);
+                }
+
                 t.Commit();
             }
             catch (Exception ex)
             {
+                validno = false;
                 t?.Rollback();
                 MessageBox.Show($"Došlo je do greške prilikom dodavanja resursa.\n\n{ex.Message}", "Greška", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return validno;
             }
             finally
             {
                 s?.Close();
             }
+            return validno;
         }
 
         /// <summary>
@@ -1182,7 +1196,40 @@ namespace SVEMIRSKA_KOLONIJA
                     resurs.Sektor = null;
                 }
 
-                s.Update(resurs);
+                // 3. BRIŠEMO sve postojeće veze između ovog resursa i stanovnika
+                // Ovo je najjednostavniji i najsigurniji način za sinhronizaciju
+                var postojeceVeze = s.Query<UpravljaResursom>()
+                                     .Where(v => v.Resurs.Id == resurs.Id)
+                                     .ToList();
+
+                foreach (var veza in postojeceVeze)
+                {
+                    s.Delete(veza);
+                }
+
+                // *** KLJUČNA IZMENA ***
+                // Nateraj NHibernate da odmah izvrši sve DELETE komande iznad.
+                // Ovo čisti tabelu pre nego što pokušamo da dodamo nove (potencijalno iste) veze.
+                s.Flush();
+
+
+                // 4. DODAJEMO PONOVO sve veze na osnovu liste koja je stigla sa forme
+                foreach (var upraviteljDTO in p.Upravitelji)
+                {
+                    var stanovnik = s.Load<Stanovnik>(upraviteljDTO.Id);
+
+                    var novaVeza = new UpravljaResursom
+                    {
+                        Resurs = resurs,
+                        Stanovnik = stanovnik
+                    };
+
+                    s.Save(novaVeza);
+                }
+
+                // Nije neophodno zvati s.Update(resurs) jer NHibernate prati promene
+                // na učitanom entitetu, ali ne smeta ako stoji.
+                //s.Update(resurs);
                 t.Commit();
             }
             catch (Exception ex)
@@ -1224,28 +1271,42 @@ namespace SVEMIRSKA_KOLONIJA
             }
         }
 
-        public static void DodeliUpraviteljaResursu(int stanovnikId, int resursId)
+        public static bool DodeliUpraviteljaResursu(int stanovnikId, int resursId)
         {
             ISession s = null;
             ITransaction t = null;
+            bool validno = true;
             try
             {
                 s = DataLayer.GetSession();
                 t = s.BeginTransaction();
 
+                // 1. Učitaj entitete
                 var stanovnik = s.Load<Stanovnik>(stanovnikId);
                 var resurs = s.Load<Resurs>(resursId);
 
-                if (!resurs.Upravitelji.Any(u => u.Id == stanovnikId))
+                // 2. Proveri da li veza već postoji (opciono ali dobra praksa)
+                bool vezaPostoji = s.Query<UpravljaResursom>()
+                                    .Any(v => v.Resurs.Id == resursId && v.Stanovnik.Id == stanovnikId);
+
+                if (!vezaPostoji)
                 {
-                    resurs.Upravitelji.Add(stanovnik);
-                    s.Update(resurs);
+                    // 3. Kreiraj NOVI objekat prelazne klase
+                    var novaVeza = new UpravljaResursom
+                    {
+                        Resurs = resurs,
+                        Stanovnik = stanovnik
+                    };
+
+                    // 4. Sačuvaj taj novi objekat
+                    s.Save(novaVeza);
                 }
 
                 t.Commit();
             }
             catch (Exception ex)
             {
+                validno = false;
                 t?.Rollback();
                 MessageBox.Show($"Došlo je do greške prilikom dodeljivanja upravitelja resursu.\n\n{ex.Message}", "Greška", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
@@ -1253,6 +1314,7 @@ namespace SVEMIRSKA_KOLONIJA
             {
                 s?.Close();
             }
+            return validno;
         }
 
         #endregion

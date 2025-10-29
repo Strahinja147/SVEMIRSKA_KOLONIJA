@@ -46,83 +46,95 @@
             // labelSifra
             // 
             this.labelSifra.AutoSize = true;
-            this.labelSifra.Location = new System.Drawing.Point(12, 50);
+            this.labelSifra.Location = new System.Drawing.Point(16, 62);
+            this.labelSifra.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelSifra.Name = "labelSifra";
-            this.labelSifra.Size = new System.Drawing.Size(31, 13);
+            this.labelSifra.Size = new System.Drawing.Size(37, 16);
             this.labelSifra.TabIndex = 0;
             this.labelSifra.Text = "Šifra:";
             // 
             // labelTip
             // 
             this.labelTip.AutoSize = true;
-            this.labelTip.Location = new System.Drawing.Point(12, 83);
+            this.labelTip.Location = new System.Drawing.Point(16, 102);
+            this.labelTip.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelTip.Name = "labelTip";
-            this.labelTip.Size = new System.Drawing.Size(25, 13);
+            this.labelTip.Size = new System.Drawing.Size(30, 16);
             this.labelTip.TabIndex = 1;
             this.labelTip.Text = "Tip:";
             // 
             // labelOdgovorni
             // 
             this.labelOdgovorni.AutoSize = true;
-            this.labelOdgovorni.Location = new System.Drawing.Point(12, 115);
+            this.labelOdgovorni.Location = new System.Drawing.Point(16, 142);
+            this.labelOdgovorni.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelOdgovorni.Name = "labelOdgovorni";
-            this.labelOdgovorni.Size = new System.Drawing.Size(108, 13);
+            this.labelOdgovorni.Size = new System.Drawing.Size(133, 16);
             this.labelOdgovorni.TabIndex = 2;
             this.labelOdgovorni.Text = "Odgovorni stanovnik:";
             // 
             // labelProgramer
             // 
             this.labelProgramer.AutoSize = true;
-            this.labelProgramer.Location = new System.Drawing.Point(12, 145);
+            this.labelProgramer.Location = new System.Drawing.Point(16, 178);
+            this.labelProgramer.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelProgramer.Name = "labelProgramer";
-            this.labelProgramer.Size = new System.Drawing.Size(58, 13);
+            this.labelProgramer.Size = new System.Drawing.Size(74, 16);
             this.labelProgramer.TabIndex = 3;
             this.labelProgramer.Text = "Programer:";
             // 
             // labelSektor
             // 
             this.labelSektor.AutoSize = true;
-            this.labelSektor.Location = new System.Drawing.Point(12, 177);
+            this.labelSektor.Location = new System.Drawing.Point(16, 218);
+            this.labelSektor.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelSektor.Name = "labelSektor";
-            this.labelSektor.Size = new System.Drawing.Size(41, 13);
+            this.labelSektor.Size = new System.Drawing.Size(49, 16);
             this.labelSektor.TabIndex = 4;
             this.labelSektor.Text = "Sektor:";
             // 
             // txtSifra
             // 
-            this.txtSifra.Location = new System.Drawing.Point(146, 47);
+            this.txtSifra.Location = new System.Drawing.Point(195, 58);
+            this.txtSifra.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txtSifra.Name = "txtSifra";
-            this.txtSifra.Size = new System.Drawing.Size(170, 20);
+            this.txtSifra.Size = new System.Drawing.Size(225, 22);
             this.txtSifra.TabIndex = 5;
             // 
             // txtOdgovorni
             // 
-            this.txtOdgovorni.Location = new System.Drawing.Point(146, 112);
+            this.txtOdgovorni.Location = new System.Drawing.Point(195, 138);
+            this.txtOdgovorni.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txtOdgovorni.Name = "txtOdgovorni";
-            this.txtOdgovorni.Size = new System.Drawing.Size(170, 20);
+            this.txtOdgovorni.ReadOnly = true;
+            this.txtOdgovorni.Size = new System.Drawing.Size(225, 22);
             this.txtOdgovorni.TabIndex = 7;
             // 
             // txtProgramer
             // 
-            this.txtProgramer.Location = new System.Drawing.Point(146, 142);
+            this.txtProgramer.Location = new System.Drawing.Point(195, 175);
+            this.txtProgramer.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txtProgramer.Name = "txtProgramer";
-            this.txtProgramer.Size = new System.Drawing.Size(170, 20);
+            this.txtProgramer.ReadOnly = true;
+            this.txtProgramer.Size = new System.Drawing.Size(225, 22);
             this.txtProgramer.TabIndex = 8;
             // 
             // cmbSektor
             // 
             this.cmbSektor.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbSektor.FormattingEnabled = true;
-            this.cmbSektor.Location = new System.Drawing.Point(146, 174);
+            this.cmbSektor.Location = new System.Drawing.Point(195, 214);
+            this.cmbSektor.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.cmbSektor.Name = "cmbSektor";
-            this.cmbSektor.Size = new System.Drawing.Size(170, 21);
+            this.cmbSektor.Size = new System.Drawing.Size(225, 24);
             this.cmbSektor.TabIndex = 9;
             // 
             // btnIzaberiOdgovornog
             // 
-            this.btnIzaberiOdgovornog.Location = new System.Drawing.Point(338, 109);
+            this.btnIzaberiOdgovornog.Location = new System.Drawing.Point(451, 134);
+            this.btnIzaberiOdgovornog.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnIzaberiOdgovornog.Name = "btnIzaberiOdgovornog";
-            this.btnIzaberiOdgovornog.Size = new System.Drawing.Size(130, 24);
+            this.btnIzaberiOdgovornog.Size = new System.Drawing.Size(173, 30);
             this.btnIzaberiOdgovornog.TabIndex = 11;
             this.btnIzaberiOdgovornog.Text = "Izaberi odgovornog...";
             this.btnIzaberiOdgovornog.UseVisualStyleBackColor = true;
@@ -130,9 +142,10 @@
             // 
             // btnIzaberiProgramera
             // 
-            this.btnIzaberiProgramera.Location = new System.Drawing.Point(338, 139);
+            this.btnIzaberiProgramera.Location = new System.Drawing.Point(451, 171);
+            this.btnIzaberiProgramera.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnIzaberiProgramera.Name = "btnIzaberiProgramera";
-            this.btnIzaberiProgramera.Size = new System.Drawing.Size(130, 24);
+            this.btnIzaberiProgramera.Size = new System.Drawing.Size(173, 30);
             this.btnIzaberiProgramera.TabIndex = 12;
             this.btnIzaberiProgramera.Text = "Izaberi programera...";
             this.btnIzaberiProgramera.UseVisualStyleBackColor = true;
@@ -140,9 +153,10 @@
             // 
             // btnSnimi
             // 
-            this.btnSnimi.Location = new System.Drawing.Point(169, 214);
+            this.btnSnimi.Location = new System.Drawing.Point(225, 263);
+            this.btnSnimi.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnSnimi.Name = "btnSnimi";
-            this.btnSnimi.Size = new System.Drawing.Size(111, 49);
+            this.btnSnimi.Size = new System.Drawing.Size(148, 60);
             this.btnSnimi.TabIndex = 13;
             this.btnSnimi.Text = "Sačuvaj";
             this.btnSnimi.UseVisualStyleBackColor = true;
@@ -157,16 +171,17 @@
             "Inženjerski",
             "Medicinski",
             "Nadzorni"});
-            this.cmbTipRobota.Location = new System.Drawing.Point(146, 80);
+            this.cmbTipRobota.Location = new System.Drawing.Point(195, 98);
+            this.cmbTipRobota.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.cmbTipRobota.Name = "cmbTipRobota";
-            this.cmbTipRobota.Size = new System.Drawing.Size(170, 21);
+            this.cmbTipRobota.Size = new System.Drawing.Size(225, 24);
             this.cmbTipRobota.TabIndex = 14;
             // 
             // DodajIzmeniRobotaForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(494, 284);
+            this.ClientSize = new System.Drawing.Size(659, 350);
             this.Controls.Add(this.cmbTipRobota);
             this.Controls.Add(this.btnSnimi);
             this.Controls.Add(this.btnIzaberiProgramera);
@@ -180,6 +195,7 @@
             this.Controls.Add(this.labelOdgovorni);
             this.Controls.Add(this.labelTip);
             this.Controls.Add(this.labelSifra);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "DodajIzmeniRobotaForm";
             this.Text = "DodajIzmeniRobotaForm";
             this.Load += new System.EventHandler(this.DodajIzmeniRobotForm_Load);

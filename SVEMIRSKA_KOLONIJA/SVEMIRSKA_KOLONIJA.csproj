@@ -137,6 +137,12 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forme\DodajIzmeniResursForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forme\DodajIzmeniResursForm.Designer.cs">
+      <DependentUpon>DodajIzmeniResursForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forme\DodajIzmeniRobotaForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -173,11 +179,23 @@
     <Compile Include="Forme\DodajStanovnikaForm.Designer.cs">
       <DependentUpon>DodajStanovnikaForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forme\DodeliUpravitelja.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forme\DodeliUpravitelja.Designer.cs">
+      <DependentUpon>DodeliUpravitelja.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forme\IzaberiStanovnikaForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forme\IzaberiStanovnikaForm.Designer.cs">
       <DependentUpon>IzaberiStanovnikaForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forme\ResursiForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forme\ResursiForm.Designer.cs">
+      <DependentUpon>ResursiForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forme\RobotiForm.cs">
       <SubType>Form</SubType>
@@ -230,6 +248,9 @@
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forme\DodajIzmeniResursForm.resx">
+      <DependentUpon>DodajIzmeniResursForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forme\DodajIzmeniRobotaForm.resx">
       <DependentUpon>DodajIzmeniRobotaForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -248,8 +269,14 @@
     <EmbeddedResource Include="Forme\DodajStanovnikaForm.resx">
       <DependentUpon>DodajStanovnikaForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forme\DodeliUpravitelja.resx">
+      <DependentUpon>DodeliUpravitelja.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forme\IzaberiStanovnikaForm.resx">
       <DependentUpon>IzaberiStanovnikaForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forme\ResursiForm.resx">
+      <DependentUpon>ResursiForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forme\RobotiForm.resx">
       <DependentUpon>RobotiForm.cs</DependentUpon>
