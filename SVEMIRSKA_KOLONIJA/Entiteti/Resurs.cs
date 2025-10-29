@@ -11,12 +11,14 @@ namespace SVEMIRSKA_KOLONIJA.Entiteti
         public virtual Sektor Sektor { get; set; }
 
         public virtual IList<Trosi> PotrosnjaPoSektorima { get; set; }
-        public virtual IList<Stanovnik> Upravitelji { get; set; }
+   
+        // IZMENA: Lista veza umesto liste stanovnika
+        public virtual IList<UpravljaResursom> UpravljaVeze { get; set; }
 
         public Resurs()
         {
             PotrosnjaPoSektorima = new List<Trosi>();
-            Upravitelji = new List<Stanovnik>();
+            UpravljaVeze = new List<UpravljaResursom>(); // Inicijalizacija nove liste
         }
     }
 }
